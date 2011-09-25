@@ -1,5 +1,5 @@
 var file = require('fs');
-var sessions = require("sessions");
+var sessions = require('lgx_sessions');
 var cookies = require("cookies");
 var keygrip = require("keygrip");
 var event = require("events").EventEmitter;
