@@ -1,0 +1,90 @@
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>example - framework</title>
+        <link type="text/css" href="../css/style.css" rel="stylesheet" />
+	<script type="text/javascript">
+	  window.parseJSONToUrl = function(a1){
+	      var t=[];
+	      for(var x in a1)
+		t.push(x+"="+encodeURI(a1[x]));
+	      return t.join("&");
+	      }
+
+window.LGXajax = function (param){
+
+    if (!param) return;
+    
+    var params = {
+        method : param.method || 'GET',
+        url : param.url,
+        async : param.async || true,
+        data : parseJSONToUrl(param.data) || null,
+        status : param.status || null,
+        success : param.success || null,
+        start: param.start || null,
+        statusCode : param.statusCode || {}
+    };
+    var xmlHttp = null;
+    xmlHttp = new XMLHttpRequest();
+    
+    if (params.method == 'GET')
+        xmlHttp.open(params.method, params.url + (params.data? '?'+params.data:''), params.async)
+    else
+        xmlHttp.open(params.method, params.url, params.async)
+    
+    xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xmlHttp.onreadystatechange = function (aEvt) {
+        if (xmlHttp.readyState == 4) {
+          /*  if (params.success && (params.statusCode)){
+                params.success.call(this,xmlHttp.responseText);
+            }*/
+            
+            for(var val in params.statusCode){
+                if (val == xmlHttp.status){
+                    params.statusCode[val].call(this,xmlHttp.responseText);
+                }
+            }
+        }
+    };
+    if (params.method == 'GET')
+        xmlHttp.send(null);
+    else
+        xmlHttp.send(params.data);
+
+    return xmlHttp;
+}
+</script>
+        <script type="text/javascript">
+	 function submited (){
+	    LGXajax({
+	      url:'../node/post.js',
+	      method:'post',
+	      data:{
+		      login:this.children[0].value,
+		      password:this.children[2].value
+	      },
+	      statusCode:{
+		200:function(dat){
+		      var element = document.getElementById('content');
+		      element.innerHTML = dat;
+		      
+		  }
+	      }
+	    });
+	  return false;
+	  } 
+	</script>
+</head>
+<body>
+      <div id="formPost">
+      <form  action="post.js" method="post" onsubmit="submited.call(this);return false;">
+	<input type="text" name="login"><br/>
+	<input type="password" name="pas"><br/>
+	<input type="submit" name="send"><br/>
+      </form>
+      <br/><br/><br/>
+      <div id="content">NO DATA</div>
+      </div>
+</body>
+</html> 
