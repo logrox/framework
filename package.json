@@ -1,0 +1,27 @@
+{
+  "name": "framework",
+  "version": "1.0.0",
+  "description": "Wymagania:\r 1: nodejs od wersji 4.3\r 2: modolu \"session\" mojego autorstwa.",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/logrox/framework.git"
+  },
+  "author": "Logrox",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/logrox/framework/issues"
+  },
+  "homepage": "https://github.com/logrox/framework#readme",
+  "dependencies": {
+    "cookies": "^0.5.0",
+    "events": "^1.0.2",
+    "keygrip": "^1.0.1"
+  }
+}
